@@ -89,6 +89,10 @@ public class ProfileConverter
                 nbtStream.close();
             }
         }
+
+        File converted = new File( newFolder.getPath() + ".converted" );
+        newFolder.renameTo( converted );
         System.out.println( "Successfully converted " + success + " files. Please review all " + error + " errors and thanks for using this tool!" );
+        System.out.println( "If you need to run this tool again you will need to rename " + converted + " to " + newFolder );
     }
 }
