@@ -49,9 +49,10 @@ public class ProfileConverter
         int success = 0, error = 0;
         for ( File sourceFile : toConvert )
         {
-            NBTInputStream nbtStream = new NBTInputStream( new FileInputStream( sourceFile ), true );
+            NBTInputStream nbtStream = null;
             try
             {
+                nbtStream = new NBTInputStream( new FileInputStream( sourceFile ), true );
                 Tag root = nbtStream.readTag();
                 if ( !( root instanceof CompoundTag ) )
                 {
@@ -86,7 +87,10 @@ public class ProfileConverter
                 error++;
             } finally
             {
-                nbtStream.close();
+                if ( nbtStream != null )
+                {
+                    nbtStream.close();
+                }
             }
         }
 
