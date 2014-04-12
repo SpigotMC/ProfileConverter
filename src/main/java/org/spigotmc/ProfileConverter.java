@@ -49,9 +49,9 @@ public class ProfileConverter
         int count = 0;
         for ( File sourceFile : toConvert )
         {
+            NBTInputStream nbtStream = new NBTInputStream( new FileInputStream( sourceFile ), true );
             try
             {
-                NBTInputStream nbtStream = new NBTInputStream( new FileInputStream( sourceFile ), true );
                 Tag root = nbtStream.readTag();
                 if ( !( root instanceof CompoundTag ) )
                 {
@@ -83,6 +83,9 @@ public class ProfileConverter
                 System.err.println( "Error converting file " + sourceFile );
                 System.err.print( "\t" );
                 ex.printStackTrace();
+            } finally
+            {
+                nbtStream.close();
             }
         }
         System.out.println( "Successfully converted " + count + " files. Please review all errors and thanks for using this tool!" );
