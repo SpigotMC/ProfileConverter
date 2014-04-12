@@ -46,7 +46,7 @@ public class ProfileConverter
 
         File[] toConvert = newFolder.listFiles();
         System.out.println( "Discovered " + toConvert.length + " files for conversion. Converting now...." );
-        int count = 0;
+        int success = 0, error = 0;
         for ( File sourceFile : toConvert )
         {
             NBTInputStream nbtStream = new NBTInputStream( new FileInputStream( sourceFile ), true );
@@ -77,17 +77,18 @@ public class ProfileConverter
                     throw new RuntimeException( "Duplicate name " + name );
                 }
                 Files.copy( sourceFile, destFile );
-                count++;
+                success++;
             } catch ( Exception ex )
             {
                 System.err.println( "Error converting file " + sourceFile );
                 System.err.print( "\t" );
                 ex.printStackTrace();
+                error++;
             } finally
             {
                 nbtStream.close();
             }
         }
-        System.out.println( "Successfully converted " + count + " files. Please review all errors and thanks for using this tool!" );
+        System.out.println( "Successfully converted " + success + " files. Please review all " + error + " errors and thanks for using this tool!" );
     }
 }
